@@ -1,4 +1,4 @@
-package io.github.pseudo;
+package io.github.aurelieakli;
 
 public class App {
     

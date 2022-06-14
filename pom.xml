@@ -28,19 +28,43 @@
         <maven.jar>3.2.0</maven.jar>
         <maven.install>3.0.0-M1</maven.install>
 
+        <neo4j.version>4.4.6</neo4j.version>
+        <neo4j.version>1.9.3</neo4j.version>
+
+
         <!-- SonarCloud properties -->
         <!-- FIXME replace with your SonarCloud organization on https://sonarcloud.io -->
-        <sonar.organization>mathieusoysal</sonar.organization>
+
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
         <!-- Dependencies -->
         <dependency>
+            <groupId>org.neo4j.app</groupId>
+            <artifactId>neo4j-server</artifactId>
+            <version>${neo4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j</artifactId>
+            <version>4.4.6</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.neo4j.driver</groupId>
             <artifactId>neo4j-java-driver</artifactId>
             <version>4.4.6</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-graphdb-api</artifactId>
+            <version>4.4.6</version>
+        </dependency>
+
 
         <!-- Testing dependencies-->
         <dependency>
@@ -61,6 +85,7 @@
             <version>${junit}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>

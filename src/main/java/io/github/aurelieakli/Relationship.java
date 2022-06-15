@@ -1,12 +1,12 @@
 package io.github.aurelieakli;
 
-public class relationship {
+public class Relationship {
     private float id;
     private int jdmType;
     private int weight;
 
 
-    public relationship(float id, int jdmType, int weight) {
+    public Relationship(float id, int jdmType, int weight) {
         this.id = id;
         this.jdmType = jdmType;
         this.weight = weight;

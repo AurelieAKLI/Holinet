@@ -8,7 +8,7 @@ public class Node {
     private int jdmID;
     private int jdmType;
     private String name;
-    private List<relationship> relationshipProperties;
+    private List<Relationship> relationshipProperties;
 
 
 
@@ -55,11 +55,11 @@ public class Node {
         this.name = name;
     }
 
-    public List<relationship> getRelationshipProperties() {
+    public List<Relationship> getRelationshipProperties() {
         return relationshipProperties;
     }
 
-    public void setRelationshipProperties(List<relationship> relationshipProperties) {
+    public void setRelationshipProperties(List<Relationship> relationshipProperties) {
         this.relationshipProperties = relationshipProperties;
     }
 

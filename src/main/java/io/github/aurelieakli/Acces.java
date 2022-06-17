@@ -1,7 +1,5 @@
 package io.github.aurelieakli;
 
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.mortbay.jetty.security.Password;
 import org.neo4j.driver.*;
 import org.neo4j.graphdb.Node;
 
@@ -13,16 +11,22 @@ public class Acces implements AutoCloseable {
     public Acces(){
     }
 
-    public void connection(String uri, AuthToken username, Config password){
+    public void connection(String uri, AuthToken username){
+        Config conf= Config.defaultConfig();
         //driver = GraphDatabase.driver( "neo4j://localhost:7687", AuthTokens.basic( "neo4j", "0000" ) );
-        driver = GraphDatabase.driver(uri, username, password);
+        //driver = GraphDatabase.driver(uri, username, conf);
+        //driver = GraphDatabase.driver(uri, username);
+        driver = GraphDatabase.driver(uri);
+        //var session=driver.session();
+        System.out.println(driver);
     }
 
     public void accessDatabase(String nameDatabase){
-        try (Session session = driver.session()) {
+        try (Session session = driver.session(SessionConfig.forDatabase("Project 1"))) {
             session.writeTransaction(tx -> tx.run(":use " + nameDatabase));
         }
         catch(Exception e){
+            System.out.println("nooon");
             System.out.println(e);
         }
     }

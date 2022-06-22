@@ -1,13 +1,8 @@
 package io.github.aurelieakli;
 
 import org.neo4j.driver.*;
-import org.neo4j.driver.Config;
+import org.neo4j.driver.Record;
 import org.neo4j.driver.exceptions.Neo4jException;
-import org.neo4j.driver.internal.BoltServerAddress;
-import org.neo4j.driver.internal.ConnectionSettings;
-import org.neo4j.driver.internal.security.SecurityPlan;
-
-import java.net.URI;
 
 public class BackEnd {
     public final Driver driver;
@@ -34,12 +29,35 @@ public class BackEnd {
     public void close() throws Neo4jException {
         driver.close();
     }
+    /*
+    public void executeSet(String cypher) {
+        try ( Session session = driver.session() ){
+            session.writeTransaction(tx -> {
+                Result result = tx.run(cypher);
+                while (result.hasNext())
+                {
+                    Record record = result.next();
+                    // Values can be extracted from a record by index or name.
+                    System.out.println(record.get("name").toString());
+                }                System.out.println("Task succeeded!");
+                return "Task succeeded!";
+            });
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }*/
 
     public void executeSet(String cypher) {
         try ( Session session = driver.session() ){
             session.writeTransaction(tx -> {
                 Result result = tx.run(cypher);
                 System.out.println("Task succeeded!");
+                while (result.hasNext())
+                {
+                    Record record = result.next();
+                    // Values can be extracted from a record by index or name.
+                    System.out.println(record.get(0).get("name").toString());
+                }
                 return "Task succeeded!";
             });
         }catch (Exception e) {

@@ -1,38 +1,38 @@
 package io.github.aurelieakli;
 
-//import org.neo4j.driver.Transaction;
-//import org.neo4j.graphdb.*;
-import org.neo4j.driver.*;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-//import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Label;
-//import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-import org.neo4j.kernel.TopLevelTransaction;
+import org.neo4j.dbms.api.DatabaseManagementService;
+import org.neo4j.graphdb.*;
 
-import java.lang.Runtime.Version;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import org.neo4j.dbms.api.DatabaseManagementService;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import org.neo4j.graphdb.Direction;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.NotFoundException;
-import org.neo4j.graphdb.PropertyContainer;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.graphdb.index.Index;
-import org.neo4j.graphdb.index.RelationshipIndex;
-import org.neo4j.helpers.collection.IterableWrapper;
-//import org.neo4j.server.database.GraphDatabaseFactory;
-import javax.naming.ServiceUnavailableException;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Result;
+import org.neo4j.graphdb.Transaction;
 
-//import org.neo4j.kernel.EmbeddedGraphDatabase;
-
-public class App {
-
+public class App  {
+    private static GraphDatabaseService graphDb;
+    private   Node firstNode;
+    private   Node secondNode;
+    private Relationship relationship;
+    private static DatabaseManagementService managementService;
 
     public enum NodeType implements Label {
         Person, Course;
@@ -43,23 +43,31 @@ public class App {
     }
 
 
+    public App(GraphDatabaseService graphDb, Node firstNode, Node secondNode, Relationship relationship, DatabaseManagementService managementService) {
+        this.graphDb = graphDb;
+        this.firstNode = firstNode;
+        this.secondNode = secondNode;
+        this.relationship = relationship;
+        this.managementService = managementService;
+    }
+
     public static void main(String[] args) throws Exception {
 
         BackEnd backEnd= new BackEnd( "Projet 1", "bolt://localhost:7687", "neo4j", "0000" );
         backEnd.createSession();
-        backEnd.executeSet("CREATE (n:NOUVEAU)");
-        backEnd.executeSet("match (n) return n");
+
+
+
+        //utiliser merge plutôt que contrainte d'unicité
+        //backEnd.executeSet("MERGE (n:NOUVEAU {name:\"un nom quelconque\"})");
+        //backEnd.executeSet("match (n) return n");
+                /*"MATCH (n)\n" +
+                "WHERE n.name=\"Morpheus\"\n" +
+                "RETURN\n" +
+                "  n.name AS name,\n" +
+                "  exists((n)-[:CODED_BY]->()) AS is_coded_by");*/
+        backEnd.executeSet("match (n) where n.name=\"Neo\" return n");
         backEnd.close();
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -112,6 +120,21 @@ public class App {
         //TODO : comment ajouter une propriété/noeud manquant
         //TODO le faire à partir de java
         //TODO compléter la base de connaissance avec le leee
+
+        /*
+        PSEUDO-CODE
+        fonctionFinale(catégorie_souhaitée) :
+            catégorie_souhaitée catg=[]
+            pour tous les noeuds dans holinet :
+                si noeud.catégorie==catégorie_souhaitée
+                     categorie+=noeud
+                     applicationTravailSurLesEtiquettes()
+        retourner liste
+        demander au prof si il vaut mieux traverser holinet une fois et faire le
+        travail sur les étiquettes tout d'un coup u bien retraverser holinet pour
+        chaque nouvelle catg et renvoyer à chaque  fois une liste par catg par ex
+
+         */
     }
 
 }

@@ -66,7 +66,8 @@ public class App  {
                 "RETURN\n" +
                 "  n.name AS name,\n" +
                 "  exists((n)-[:CODED_BY]->()) AS is_coded_by");*/
-        backEnd.executeSet("match (n) where n.name=\"Neo\" return n");
+        backEnd.executeSet(" MATCH (n) RETURN DISTINCT PROPERTIES(n)");
+        //backEnd.executeSet("match (n) where n.name=\"Neo\" return n");
         backEnd.close();
 
 

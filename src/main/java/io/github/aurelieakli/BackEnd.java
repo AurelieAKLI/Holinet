@@ -2,8 +2,10 @@ package io.github.aurelieakli;
 
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
+import org.neo4j.driver.Result;
 import org.neo4j.driver.exceptions.Neo4jException;
-
+import org.neo4j.graphdb.*;
+import org.neo4j.graphdb.PropertyContainer;
 public class BackEnd {
     public final Driver driver;
     private final String database;
@@ -54,9 +56,21 @@ public class BackEnd {
                 System.out.println("Task succeeded!");
                 while (result.hasNext())
                 {
+                    //les  prochaines lignes permettent de récupérer les labels / propriétés du noeud
+                    //backEnd.executeSet(" MATCH (n) RETURN DISTINCT LABELS(n)");         backEnd.executeSet(" MATCH (n) RETURN DISTINCT PROPERTIES(n)"); dans App.java
                     Record record = result.next();
+                    System.out.println(record.toString());
+
                     // Values can be extracted from a record by index or name.
-                    System.out.println(record.get(0).get("name").toString());
+                    /*Node n = (Node) record.get(0).asNode();
+                    System.out.println(n);
+                    System.out.println(record.get(0).asNode().get("name").toString());
+                    System.out.println((record.get(0).asNode()).getClass().getName());
+                    System.out.println(n.getId());
+                    record.get(0).asNode();
+
+                    */
+
                 }
                 return "Task succeeded!";
             });

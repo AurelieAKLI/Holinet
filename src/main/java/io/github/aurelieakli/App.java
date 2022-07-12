@@ -51,12 +51,96 @@ public class App  {
         this.managementService = managementService;
     }
 
+
+
     public static void main(String[] args) throws Exception {
 
-        BackEnd backEnd= new BackEnd( "Projet 1", "bolt://localhost:7687", "neo4j", "0000" );
+        BackEnd backEnd= new BackEnd( "stageEval", "bolt://localhost:7687", "neo4j", "0000" );
         backEnd.createSession();
 
+        //backEnd.executeSet("create (n:NOUVEAU{name:'faut tout tester'})");
+/*
+        String[] tableau={"name:Det", "Gender:Fem", "Number:Sing"};
+        backEnd.fusionEtiquettes(tableau);
 
+*/
+        String[] tableau={"Det", "Fem", "Inv", "Plur"};
+        System.out.println(backEnd.retouverLiensAvec(tableau));
+
+        backEnd.executeSet("match (n:n_term)-[r:r_pos]->(m:n_pos) where r.weight>0 and m.name STARTS WITH \"Det:Fem+SG\" return properties(n)");
+
+        backEnd.close();
+
+        //backEnd.executeSet("MATCH (n) WHERE n.name=\"chat\" RETURN DISTINCT PROPERTIES(n)");
+        /*
+        System.out.println("\n\n\n\n############################################\nDet Masc Sing");
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Sing'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Mas'}) " +
+                "WHERE r.weight>0 AND rr.weight>0 AND rrr.weight>0 " +
+                "MERGE (n)-[rrrr:r_pos]->(nouveau:n_pos{name:'Det:Mas+SG'}) " +
+                //"return *");
+                "RETURN DISTINCT PROPERTIES(n)");
+
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Sing'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Mas'}), " +
+                "(n:n_term)-[rrrr:r_pos]->(p:n_pos{name:'Det:Mas+SG'})  " +
+                "SET (CASE WHEN NOT exists(rrrr.weight) " +
+                "THEN rrrr END).weight= (rrr.weight+rr.weight+r.weight)/3 RETURN DISTINCT PROPERTIES(n)");
+
+
+        System.out.println("\n\n\n\n############################################\nDet Masc Plur");
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Plur'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Mas'}) " +
+                "WHERE r.weight>0 AND rr.weight>0 AND rrr.weight>0 " +
+                "MERGE (n)-[rrrr:r_pos]->(nouveau:n_pos{name:'Det:Mas+PL'}) " +
+                "RETURN  DISTINCT PROPERTIES(n)");
+
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Plur'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Mas'}), " +
+                "(n:n_term)-[rrrr:r_pos]->(p:n_pos{name:'Det:Mas+PL'})  " +
+                "SET (CASE WHEN NOT exists(rrrr.weight) " +
+                "THEN rrrr END).weight= (rrr.weight+rr.weight+r.weight)/3 RETURN DISTINCT PROPERTIES(n)");
+
+
+
+        System.out.println("\n\n\n\n############################################\nDet Fem Sing");
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Sing'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Fem'})" +
+                " WHERE r.weight>0 AND rr.weight>0 AND rrr.weight>0 " +
+                "MERGE (n)-[rrrr:r_pos]->(nouveau:n_pos{name:'Det:Fem+SG'}) " +
+                "RETURN  DISTINCT PROPERTIES(n)");
+
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Sing'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Fem'}), " +
+                "(n:n_term)-[rrrr:r_pos]->(p:n_pos{name:'Det:Fem+SG'})  " +
+                "SET (CASE WHEN NOT exists(rrrr.weight) " +
+                "THEN rrrr END).weight= (rrr.weight+rr.weight+r.weight)/3 RETURN DISTINCT PROPERTIES(n)");
+
+
+
+        System.out.println("\n\n\n\n############################################\nDet Fem Plur");
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Plur'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Fem'}) " +
+                "WHERE r.weight>0 AND rr.weight>0 AND rrr.weight>0 " +
+                "MERGE (n)-[rrrr:r_pos]->(nouveau:n_pos{name:'Det:Fem+PL'}) " +
+                "RETURN  DISTINCT PROPERTIES(n)");
+
+        backEnd.executeSet("MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
+                "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Plur'})," +
+                "(n:n_term)-[rrr:r_pos]->(o:n_pos{name:'Gender:Fem'}), " +
+                "(n:n_term)-[rrrr:r_pos]->(p:n_pos{name:'Det:Fem+PL'})  " +
+                "SET (CASE WHEN NOT exists(rrrr.weight) " +
+                "THEN rrrr END).weight= (rrr.weight+rr.weight+r.weight)/3 RETURN DISTINCT PROPERTIES(n)");
+
+
+        */
 
         //utiliser merge plutôt que contrainte d'unicité
         //backEnd.executeSet("MERGE (n:NOUVEAU {name:\"un nom quelconque\"})");
@@ -66,10 +150,10 @@ public class App  {
                 "RETURN\n" +
                 "  n.name AS name,\n" +
                 "  exists((n)-[:CODED_BY]->()) AS is_coded_by");*/
-        backEnd.executeSet(" MATCH (n) RETURN DISTINCT PROPERTIES(n)");
-        //backEnd.executeSet("match (n) where n.name=\"Neo\" return n");
-        backEnd.close();
+        //backEnd.executeSet("USE basetest");
+        //backEnd.executeSet("MATCH (n) RETURN DISTINCT PROPERTIES(n)");
 
+        //backEnd.executeSet("match (n) where n.name=\"Neo\" return n");
 
 
         /*

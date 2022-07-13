@@ -1,5 +1,6 @@
 package io.github.aurelieakli;
 import scala.Char;
+import scala.util.parsing.combinator.testing.Str;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,38 +10,45 @@ import java.util.List;
 public class lecturePTB {
 
     //public String lecture(String fichier){
-    public void lecture(String fichier){
+    public List<String> lecture(File dossier){
         List<String> liste = new ArrayList<>();
         try
         {
-            // Le fichier d'entrée
-            File file = new File(fichier);
-            // Créer l'objet File Reader
-            FileReader fr = new FileReader(file);
-            // Créer l'objet BufferedReader
-            BufferedReader br = new BufferedReader(fr);
-            StringBuffer sb = new StringBuffer();
-            String line;
-            while((line = br.readLine()) != null)
-            {
-                String det=listeDeterminantDansFTB(line.toString());
-                if (det!=null && !liste.contains((det))){
-                    liste.add(det);
+            for (File file : dossier.listFiles()){
+                if (!file.isDirectory()){
+                    // Le fichier d'entrée
+                    //file = new File(fichier);
+                    // Créer l'objet File Reader
+                    FileReader fr = new FileReader(file);
+                    // Créer l'objet BufferedReader
+                    BufferedReader br = new BufferedReader(fr);
+                    StringBuffer sb = new StringBuffer();
+                    String line;
+                    while((line = br.readLine()) != null)
+                    {
+                        String det=listeDeterminantDansFTB(line.toString());
+                        if (det!=null && !liste.contains((det))){
+                            liste.add(det);
 
+                        }
+                        //System.out.println(listeDeterminantDansFTB(line.toString()));
+                        //System.out.println(traitement(line.toString()));
+
+                    }
+                    fr.close();
+                    //System.out.println("Contenu du fichier: ");
+                    //System.out.println(sb.toString());
                 }
-                //System.out.println(listeDeterminantDansFTB(line.toString()));
-                //System.out.println(traitement(line.toString()));
-
             }
-            fr.close();
-            System.out.println("Contenu du fichier: ");
-            System.out.println(sb.toString());
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
+
         System.out.println(liste);
+        System.out.println(liste.size());
+        return liste;
     }
 
     public HashMap traitement(String ligne){
@@ -137,8 +145,10 @@ public class lecturePTB {
 
     public static void main(String[] args) throws Exception {
         lecturePTB lecture= new lecturePTB();
+        File dossier = new File("\\\\Filer\\home\\Invites\\akli\\Mes documents\\fichiersPTBaLire");
+        lecture.lecture(dossier);
         //String ligne=lecture.lecture("C:\\Users\\akli\\IdeaProjects\\Holinet\\src\\main\\java\\io\\github\\aurelieakli\\dev.French.gold.ptb");
-        lecture.lecture("C:\\Users\\akli\\IdeaProjects\\Holinet\\src\\main\\java\\io\\github\\aurelieakli\\dev.French.gold.ptb");
+        //premiere version avec un seul fichier lu lecture.lecture("C:\\Users\\akli\\IdeaProjects\\Holinet\\src\\main\\java\\io\\github\\aurelieakli\\dev.French.gold.ptb");
         //Une valeur peut avoir plusieurs clés ->  les catg gram des valeurs assoc à différents mots
         //une valer=catg et le mot en valeur
         //System.out.println(ligne);

@@ -27,6 +27,9 @@ public class lecturePTB {
                     while((line = br.readLine()) != null)
                     {
                         String det=listeDeterminantDansFTB(line.toString());
+                        //String det=listeDeterminantDansFTB(line.toString());
+
+                        //if (det!=null ){
                         if (det!=null && !liste.contains((det))){
                             liste.add(det);
 
@@ -127,7 +130,8 @@ public class lecturePTB {
                     seq="";
                     //System.out.println("!"+parties[0]+";"+parties[2]+"\n");
                     //liste.add(parties[2]);
-                    return(parties[2]);
+                    parties[1]=parties[1].replace(",","");
+                    return("\n"+parties[1]+" - "+parties[2]);
 
                 }
 
@@ -157,8 +161,8 @@ public class lecturePTB {
         h.put("det -  la",1);
         h.put("det -  la",2);
 
-        System.out.println(h+"\t"+h.size());
-        System.out.println(h.get("det -  la")+10);
+        //System.out.println(h+"\t"+h.size());
+        //System.out.println(h.get("det -  la")+10);
     }
 
 }

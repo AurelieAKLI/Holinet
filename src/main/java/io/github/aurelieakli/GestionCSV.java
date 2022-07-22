@@ -13,6 +13,7 @@ public class GestionCSV {
 
     private static Scanner x;
 
+
     public static void main(String[] args){
         String name = "Bob";
         String name2 = "Alice";
@@ -26,14 +27,15 @@ public class GestionCSV {
 
         //saveRecord(name, name2, pk, sk , filepath);
         //readRecord(name2,"cake.csv");
-        
-        removeRecord(filepath, "Alice", 1, ";");
+
+
+        //removeRecord(filepath, "Alice", 1, ";"); mettre static
 
     }
 
-    private static void removeRecord(String filepath, String removeTerm, int pos, String delimiter) {
+    public  void  removeRecord(String filepath, String tempFile,  String removeTerm, int pos, String delimiter) {
         int position = pos-1;
-        String tempFile="temp.txt"; //ecrit dans temp.txt les lignes qui contiennent pas Alice
+        //String tempFile="temp.txt"; //ecrit dans temp.txt les lignes qui contiennent Alice
         File oldFile = new File(filepath);
         File newFile = new File(tempFile);
 
@@ -49,11 +51,10 @@ public class GestionCSV {
             BufferedReader br = new BufferedReader(fr);
 
             while ((currentLine=br.readLine()) != null){
-                data=currentLine.split(";");
-                System.out.println(data[position]);
-                if (!(data[position].equalsIgnoreCase(removeTerm))){
+                data=currentLine.split("##");
+                //System.out.println(data[position]);
+                if ((data[position].equalsIgnoreCase(removeTerm))){
                     pw.println(currentLine);
-                    System.out.println("youpimmm");
 
                 }
             }
@@ -65,7 +66,7 @@ public class GestionCSV {
         }
     }
 
-    private static void AddColumn(String[] newDataCol, String filepath, String delimiter, int colPos) {
+    public void AddColumn(String[] newDataCol, String filepath, String delimiter, int colPos) {
         try{
             List<String> data = Files.readAllLines(Paths.get(filepath));
             PrintWriter pw = new PrintWriter(filepath);
@@ -85,7 +86,7 @@ public class GestionCSV {
         }
     }
 
-    public static void saveRecord(String name, String name2, String pk, String sk , String filepath){
+    public void saveRecord(String name, String name2, String pk, String sk , String filepath){
         try{
             //ecrire dans csv
             FileWriter fw = new FileWriter(filepath, true);
@@ -106,7 +107,7 @@ public class GestionCSV {
         }
     }
 
-    public static void readRecord(String searchTerm, String filepath){
+    public void readRecord(String searchTerm, String filepath){
         boolean found = false;
         String name="";
         String name2 = "";
@@ -130,6 +131,31 @@ public class GestionCSV {
         catch(Exception e){
 
         }
+    }
+
+    public List<String> getNamePosInCSV(String filepath){
+        String pos="";
+        List<String> listNodesNames = new ArrayList<>();
+        try{
+            x = new Scanner(new File(filepath));
+            x.useDelimiter("[##\n]");
+            while(x.hasNext()){
+                pos=x.next();
+                if (pos.contains("Det:") && !pos.contains("Pre")){
+                    pos=pos.replace("\t","");
+                    pos=pos.replace("DET+","");
+
+                    //System.out.println(pos);
+                    listNodesNames.add(pos);
+                }
+            }
+
+        }
+        catch (Exception e){
+
+        }
+        return listNodesNames;
+
     }
 
 

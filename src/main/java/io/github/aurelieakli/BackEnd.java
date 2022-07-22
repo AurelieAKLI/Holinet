@@ -6,6 +6,10 @@ import org.neo4j.driver.Result;
 import org.neo4j.driver.exceptions.Neo4jException;
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.PropertyContainer;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BackEnd {
     public final Driver driver;
     private final String database;
@@ -36,9 +40,34 @@ public class BackEnd {
         return request;
     }
 
-    public void fusionEtiquettes(String... arguments){
+    public String fusionEtiquettes(String... arguments){
         //trait : nombre genre sous categ : def/indef
         //structure de trait : après le 1er arg du vararg
+        String request="MATCH";
+        String[] r= new String[arguments.length];
+
+        for (int i=0; i<r.length;++i){
+            r[i]="";
+        }
+
+        String m="";
+        request = getStringPremierePartie(request, r, m, arguments);
+        request+=" WHEREE ";
+
+        for(int i=0; i<arguments.length; ++i){
+            request+="AND "+ r[i]+".weight>0 ";
+        }
+
+        int x = (arguments.length)-1 ;
+        request = finalite(request, x, arguments);
+        request=request.replace("E AND", "");
+        return request.replace("+}", "'");
+
+        //System.out.println(request);
+        //executeSet(request);
+    }
+    /*
+    public void fusionEtiquettes(String... arguments){
         String request="MATCH";
         String[] r= new String[arguments.length];
 
@@ -54,10 +83,19 @@ public class BackEnd {
             request+="AND "+ r[i]+".weight>0 ";
         }
 
+        for (int i=0; i<arguments.length; ++i){
+            System.out.println(arguments[i]);
+
+        }
+
         int x = (arguments.length)-1 ;
+        System.out.println("x vaut : "+x);
         request = finalite(request, x, arguments);
-        executeSet(request);
+
+
+        System.out.println(request);
     }
+    */
 
     public String retouverLiensAvec(String... arguments){
         String request = "match (n:n_term)-[r:r_pos]->(m:n_pos) where m.name=\"";
@@ -75,21 +113,28 @@ public class BackEnd {
         }
         request+="\" ";
         request+="RETURN DISTINCT PROPERTIES(n)";
-        request=request.replace(":+", "");
+        request=request.replace("+}", "'");
         return request;
     }
 
-    private String finalite(String request, int x, String[] arguments) {
-        request +=" MERGE (n)-["+ arguments[x]+"r:r_pos]->(nouveau:n_pos{";
+    private String finalite(String request, int x, String... arguments) {
+        System.out.println(request);
+
+
+        request +=" MERGE (n)-["+ arguments[x]+"r:r_pos]->(nouveau:n_pos{'";
+        //System.out.println(request);
         request = getStringDeuxiemePartie(request, arguments);
+
         request +="RRETURN DISTINCT PROPERTIES(n)";
 
 
-        System.out.println(request +"\n");
+        //System.out.println(request +"\n");
         request = request.replaceFirst(",", " ");
-        request = request.replaceFirst("AND,", " ");
-        request = request.replace("+R", " ");
-        System.out.println(request);
+        //request = request.replaceFirst("AND,", " ");
+        request = request.replace("RR", "R");
+
+
+        //System.out.println(request);
         return request;
     }
 
@@ -112,8 +157,17 @@ public class BackEnd {
                 r[i]= r[i-1]+"r";
             }
             m +="m";
-            System.out.println(r[i]+"\n");
-            request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{'"+ arguments[i]+":'}) ";
+            //System.out.println(r[i]+"\n");
+            if (arguments[i]=="PL"){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{'Plur:'}) ";
+            }
+            else if (arguments[i]=="SG"){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{'Sing:'}) ";
+            }
+            else{
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{'"+ arguments[i]+":'}) ";
+
+            }
 
         }
         return request;
@@ -121,12 +175,14 @@ public class BackEnd {
 
     private String getStringDeuxiemePartie(String request, String[] arguments) {
         for (int i = 0; i< arguments.length; ++i){
+            System.out.println((arguments[i]));
             if (i==0){
-                String etiquette= arguments[i].split(":")[1];
+                String etiquette= arguments[i].split(":")[0];
                 request +=etiquette+":";
             }
             else{
-                String etiquette= arguments[i].split(":")[1];
+                //String etiquette= arguments[i].split(":")[1];
+                String etiquette=arguments[i];
                 if (etiquette.equals("Sing")){
                     etiquette="SG";
                 }
@@ -137,6 +193,7 @@ public class BackEnd {
                 request +=etiquette+"+";
             }
         }
+        request+="}}) ";
         return request;
     }
 
@@ -175,7 +232,8 @@ public class BackEnd {
         }
     }*/
 
-    public void executeSet(String cypher) {
+    public List<String> executeSet(String cypher) {
+        List<String> res = new ArrayList<>();
         try ( Session session = driver.session() ){
             session.writeTransaction(tx -> {
                 Result result = tx.run(cypher);
@@ -187,15 +245,16 @@ public class BackEnd {
                     //backEnd.executeSet(" MATCH (n) RETURN DISTINCT LABELS(n)");         backEnd.executeSet(" MATCH (n) RETURN DISTINCT PROPERTIES(n)"); dans App.java
                     Record record = result.next();
                     String rts=record.toString();
-                    System.out.println(rts);
+                    //System.out.println(rts); //pour afficher tout le resultat de distincts properties
                     if (rts.contains("LABELS")){
                         //System.out.println(getLabels(record.toString()));
                     }
                     if (rts.contains("PROPERTIES")){
                         //System.out.println(getProperties(record.toString()));
                     }
-                    System.out.println(getNameOfNode(record.toString()));
 
+                    //System.out.println(getNameOfNode(record.toString()));
+                    res.add(getNameOfNode(record.toString()));
 
                     // Values can be extracted from a record by index or name.
                     //Node n = (Node) record.get(0).asNode();
@@ -208,11 +267,13 @@ public class BackEnd {
 
 
                 }
-                return "Task succeeded!";
+                return res;
             });
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        return res;
     }
 
 
@@ -224,7 +285,8 @@ public class BackEnd {
     public String getNameOfNode(String noeud){
         String support=getProperties(noeud);
         support=support.split(":")[1];
-        return support.split(",")[0];
+        support=support.split(",")[0];
+        return support.replaceFirst(" ","");
     }
 
     public String getLabels(String noeud){

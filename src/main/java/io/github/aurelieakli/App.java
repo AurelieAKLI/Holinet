@@ -64,10 +64,12 @@ public class App  {
         backEnd.fusionEtiquettes(tableau);
 
 */
-        String[] tableau={"Det", "Fem", "Inv", "Plur"};
+/*        String[] tableau={"Det", "Fem", "Inv", "Plur"};
         System.out.println(backEnd.retouverLiensAvec(tableau));
 
         backEnd.executeSet("match (n:n_term)-[r:r_pos]->(m:n_pos) where r.weight>0 and m.name STARTS WITH \"Det:Fem+SG\" return properties(n)");
+*/
+        backEnd.executeSet("match (n:n_pos)  where n.name starts with \"Det:\" return count(n)");
 
         backEnd.close();
 

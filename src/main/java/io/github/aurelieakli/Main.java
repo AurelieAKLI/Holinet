@@ -12,8 +12,14 @@ public class Main {
         GestionCSV csv = new GestionCSV();
         String csvIn = "ptb2jdm.lookup.csv";
         String csvOut = "resultat.csv";
+        String finalCsv = "finalCSV.csv";
 
         csv.removeRecord(csvIn, csvOut, "DET", 1, ";");
+        String[] dataCol= new String[50];
+        for (int i=0; i<50; ++i){
+            dataCol[i]="peu importe";
+        }
+        csv.addColumn(csvOut, finalCsv, ";", 0, dataCol);
 
         //recupérer les étiquettes souhaitées (ici Det:*)
         //faire un foreach qui fera une requete sur chacune des ces étiquettes ;
@@ -32,7 +38,7 @@ public class Main {
         String request = backEnd.fusionEtiquettes(tableau);
         System.out.println(request);
 
-        System.out.println("Res final:"+backEnd.executeSet("MATCH (n{name:'chat'}) RETURN  DISTINCT PROPERTIES(n)"));
+        System.out.println("Res final:"+backEnd.executeSet("MATCH (n) WHERE n.name=\"chat\" OR  n.name=\"chats\" RETURN DISTINCT PROPERTIES(n)"));
         backEnd.close();
         //Det:Fem+SG+Def
 

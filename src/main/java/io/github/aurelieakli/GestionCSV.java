@@ -66,13 +66,13 @@ public class GestionCSV {
         }
     }
 
-    public void AddColumn(String[] newDataCol, String filepath, String delimiter, int colPos) {
+    public void addColumn(String filepath, String filepathOut, String delimiter, int colPos, String... newDataCol) {
         try{
             List<String> data = Files.readAllLines(Paths.get(filepath));
-            PrintWriter pw = new PrintWriter(filepath);
+            //PrintWriter pw = new PrintWriter(filepath);
             FileWriter fw = new FileWriter(filepath, true);
-            pw = new PrintWriter(fw);
-            for (int i = 0;  i<data.size(); ++i){
+            PrintWriter pw = new PrintWriter(fw);
+            for (int i = 0;  i< newDataCol.length; ++i){
                 String[] line = data.get(i).split(delimiter);
                 List<String> record = new ArrayList<>(Arrays.asList(line));
                 record.add(colPos, newDataCol[i]);
@@ -82,6 +82,8 @@ public class GestionCSV {
             System.out.println("Column added.");
         }
         catch(Exception e){
+            System.out.println("Column NOT added.");
+            e.printStackTrace();
 
         }
     }

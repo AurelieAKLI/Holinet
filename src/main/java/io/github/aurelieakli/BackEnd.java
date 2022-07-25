@@ -119,8 +119,6 @@ public class BackEnd {
 
     private String finalite(String request, int x, String... arguments) {
         System.out.println(request);
-
-
         request +=" MERGE (n)-["+ arguments[x]+"r:r_pos]->(nouveau:n_pos{'";
         //System.out.println(request);
         request = getStringDeuxiemePartie(request, arguments);

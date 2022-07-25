@@ -12,14 +12,13 @@ public class Main {
         GestionCSV csv = new GestionCSV();
         String csvIn = "ptb2jdm.lookup.csv";
         String csvOut = "resultat.csv";
-        String finalCsv = "finalCSV.csv";
 
         csv.removeRecord(csvIn, csvOut, "DET", 1, ";");
-        String[] dataCol= new String[50];
-        for (int i=0; i<50; ++i){
+        String[] dataCol= new String[60];
+        for (int i=0; i<60; ++i){
             dataCol[i]="peu importe";
         }
-        csv.addColumn(csvOut, finalCsv, ";", 0, dataCol);
+        csv.addColumn(csvOut, ";", 1, dataCol);
 
         //recupérer les étiquettes souhaitées (ici Det:*)
         //faire un foreach qui fera une requete sur chacune des ces étiquettes ;

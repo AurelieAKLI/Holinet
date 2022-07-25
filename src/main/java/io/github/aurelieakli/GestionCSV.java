@@ -66,7 +66,7 @@ public class GestionCSV {
         }
     }
 
-    public void addColumn(String filepath, String filepathOut, String delimiter, int colPos, String... newDataCol) {
+    public void addColumn(String filepath, String delimiter, int colPos, String... newDataCol) {
         try{
             List<String> data = Files.readAllLines(Paths.get(filepath));
             //PrintWriter pw = new PrintWriter(filepath);

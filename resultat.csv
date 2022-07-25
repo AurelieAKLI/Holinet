@@ -54,53 +54,119 @@ DET##cpos=D|n=s|pred=y##	Det:SG
 DET##cpos=D|n=s|s=def##	Det:SG+Def
 DET##cpos=D|n=s|s=def|pred=y##	Det:SG+Def
 DET##cpos=D|s=card|pred=y##	Det:+Card
-peu importe;DET##cpos=D|g=f|mwehead=ADV+|n=s|s=def|pred=y##	Det:Fem+SG+Def
-peu importe;DET##cpos=D|g=f|mwehead=ADV+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
-peu importe;DET##cpos=D|g=f|mwehead=DET+|n=s|s=def|pred=y##	Det:Fem+SG+Def
-peu importe;DET##cpos=D|g=f|mwehead=DET+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
-peu importe;DET##cpos=D|g=f|mwehead=NPP+|n=s|s=def|pred=y##	Det:Fem+SG+Def
-peu importe;DET##cpos=D|g=f|mwehead=NPP+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
-peu importe;DET##cpos=D|g=f|mwehead=NPP+|n=s|s=poss|pred=y##	Det:Fem+SG+Pos
-peu importe;DET##cpos=D|g=f|n=p|p=1|s=poss##	Det:Fem+PL+P1+Pos
-peu importe;DET##cpos=D|g=f|n=p|p=2|s=poss##	Det:Fem+PL+P2+Pos
-peu importe;DET##cpos=D|g=f|n=p|p=3|s=poss##	Det:Fem+PL+P3+Pos
-peu importe;DET##cpos=D|g=f|n=p|s=card##	Det:Fem+PL+Card
-peu importe;DET##cpos=D|g=f|n=p|s=def##	Det:Fem+PL+Def
-peu importe;DET##cpos=D|g=f|n=p|s=dem##	Det:Fem+PL+Dem
-peu importe;DET##cpos=D|g=f|n=p|s=ind##	Det:Fem+PL+Indef
-peu importe;DET##cpos=D|g=f|n=s|p=3|s=poss##	Det:Fem+SG+P3+Pos
-peu importe;DET##cpos=D|g=f|n=s|s=card##	Det:Fem+SG+Card
-peu importe;DET##cpos=D|g=f|n=s|s=def##	Det:Fem+SG+Def
-peu importe;DET##cpos=D|g=f|n=s|s=def|pred=y##	Det:Fem+SG+Def
-peu importe;DET##cpos=D|g=f|n=s|s=dem##	Det:Fem+SG+Dem
-peu importe;DET##cpos=D|g=f|n=s|s=ind##	Det:Fem+SG+Indef
-peu importe;DET##cpos=D|g=f|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
-peu importe;DET##cpos=D|g=f|n=s|s=neg##	Det:Fem+SG+Neg
-peu importe;DET##cpos=D|g=m|mwehead=ADV+|n=s|s=def|pred=y##	Det:Mas+SG+Def
-peu importe;DET##cpos=D|g=m|mwehead=ADV+|n=s|s=ind|pred=y##	Det:Mas+SG+Indef
-peu importe;DET##cpos=D|g=m|mwehead=DET+|n=s|s=ind|pred=y##	Det:Mas+SG+Indef
-peu importe;DET##cpos=D|g=m|mwehead=NC+|n=s|s=def|pred=y##	Det:Mas+SG+Def
-peu importe;DET##cpos=D|g=m|mwehead=NPP+|n=s|s=def|pred=y##	Det:Mas+SG+Def
-peu importe;DET##cpos=D|g=m|n=p|p=1|s=poss##	Det:Mas+PL+P1+Pos
-peu importe;DET##cpos=D|g=m|n=p|p=3|s=poss##	Det:Mas+PL+P3+Pos
-peu importe;DET##cpos=D|g=m|n=p|s=card##	Det:Mas+PL+Card
-peu importe;DET##cpos=D|g=m|n=p|s=def##	Det:Mas+PL+Def
-peu importe;DET##cpos=D|g=m|n=p|s=dem##	Det:Mas+PL+Dem
-peu importe;DET##cpos=D|g=m|n=p|s=ind##	Det:Mas+PL+Indef
-peu importe;DET##cpos=D|g=m|n=s|p=2|s=poss##	Det:Mas+SG+P2+Pos
-peu importe;DET##cpos=D|g=m|n=s|p=3|s=poss##	Det:Mas+SG+P3+Pos
-peu importe;DET##cpos=D|g=m|n=s|s=card##	Det:Mas+SG+Card
-peu importe;DET##cpos=D|g=m|n=s|s=def##	Det:Mas+SG+Def
-peu importe;DET##cpos=D|g=m|n=s|s=def|pred=y##	Det:Mas+SG+Def
-peu importe;DET##cpos=D|g=m|n=s|s=dem##	Det:Mas+SG+Dem
-peu importe;DET##cpos=D|g=m|n=s|s=dem|pred=y##	Det:Mas+SG+Dem
-peu importe;DET##cpos=D|g=m|n=s|s=ind##	Det:Mas+SG+Indef
-peu importe;DET##cpos=D|g=m|n=s|s=ind|pred=y##	Det:Mas+SG+Indef
-peu importe;DET##cpos=D|g=m|n=s|s=neg##	Det:Mas+SG+Neg
-peu importe;DET##cpos=D|g=m|n=s|s=part##	Det:Mas+SG+Part
-peu importe;DET##cpos=D|mwehead=DET+|n=p|s=ind|pred=y##	Det:PL+Indef
-peu importe;DET##cpos=D|mwehead=DET+|s=card|pred=y##	Det:+Card
-peu importe;DET##cpos=D|mwehead=NPP+|n=s|s=def|pred=y##	Det:SG+Def
-peu importe;DET##cpos=D|mwehead=PRO+|n=p|s=ind|pred=y##	Det:PL+Indef
-peu importe;DET##cpos=D|mwehead=PRO+|n=s|s=def|pred=y##	Det:SG+Def
-peu importe;DET##cpos=D|mwehead=PRO+|n=s|s=ind|pred=y##	Det:SG+Indef
+DET##cpos=D|g=f|mwehead=ADV+|n=s|s=def|pred=y##	Det:Fem+SG+Def
+DET##cpos=D|g=f|mwehead=ADV+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
+DET##cpos=D|g=f|mwehead=DET+|n=s|s=def|pred=y##	Det:Fem+SG+Def
+DET##cpos=D|g=f|mwehead=DET+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
+DET##cpos=D|g=f|mwehead=NPP+|n=s|s=def|pred=y##	Det:Fem+SG+Def
+DET##cpos=D|g=f|mwehead=NPP+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
+DET##cpos=D|g=f|mwehead=NPP+|n=s|s=poss|pred=y##	Det:Fem+SG+Pos
+DET##cpos=D|g=f|n=p|p=1|s=poss##	Det:Fem+PL+P1+Pos
+DET##cpos=D|g=f|n=p|p=2|s=poss##	Det:Fem+PL+P2+Pos
+DET##cpos=D|g=f|n=p|p=3|s=poss##	Det:Fem+PL+P3+Pos
+DET##cpos=D|g=f|n=p|s=card##	Det:Fem+PL+Card
+DET##cpos=D|g=f|n=p|s=def##	Det:Fem+PL+Def
+DET##cpos=D|g=f|n=p|s=dem##	Det:Fem+PL+Dem
+DET##cpos=D|g=f|n=p|s=ind##	Det:Fem+PL+Indef
+DET##cpos=D|g=f|n=s|p=3|s=poss##	Det:Fem+SG+P3+Pos
+DET##cpos=D|g=f|n=s|s=card##	Det:Fem+SG+Card
+DET##cpos=D|g=f|n=s|s=def##	Det:Fem+SG+Def
+DET##cpos=D|g=f|n=s|s=def|pred=y##	Det:Fem+SG+Def
+DET##cpos=D|g=f|n=s|s=dem##	Det:Fem+SG+Dem
+DET##cpos=D|g=f|n=s|s=ind##	Det:Fem+SG+Indef
+DET##cpos=D|g=f|n=s|s=ind|pred=y##	Det:Fem+SG+Indef
+DET##cpos=D|g=f|n=s|s=neg##	Det:Fem+SG+Neg
+DET##cpos=D|g=m|mwehead=ADV+|n=s|s=def|pred=y##	Det:Mas+SG+Def
+DET##cpos=D|g=m|mwehead=ADV+|n=s|s=ind|pred=y##	Det:Mas+SG+Indef
+DET##cpos=D|g=m|mwehead=DET+|n=s|s=ind|pred=y##	Det:Mas+SG+Indef
+DET##cpos=D|g=m|mwehead=NC+|n=s|s=def|pred=y##	Det:Mas+SG+Def
+DET##cpos=D|g=m|mwehead=NPP+|n=s|s=def|pred=y##	Det:Mas+SG+Def
+DET##cpos=D|g=m|n=p|p=1|s=poss##	Det:Mas+PL+P1+Pos
+DET##cpos=D|g=m|n=p|p=3|s=poss##	Det:Mas+PL+P3+Pos
+DET##cpos=D|g=m|n=p|s=card##	Det:Mas+PL+Card
+DET##cpos=D|g=m|n=p|s=def##	Det:Mas+PL+Def
+DET##cpos=D|g=m|n=p|s=dem##	Det:Mas+PL+Dem
+DET##cpos=D|g=m|n=p|s=ind##	Det:Mas+PL+Indef
+DET##cpos=D|g=m|n=s|p=2|s=poss##	Det:Mas+SG+P2+Pos
+DET##cpos=D|g=m|n=s|p=3|s=poss##	Det:Mas+SG+P3+Pos
+DET##cpos=D|g=m|n=s|s=card##	Det:Mas+SG+Card
+DET##cpos=D|g=m|n=s|s=def##	Det:Mas+SG+Def
+DET##cpos=D|g=m|n=s|s=def|pred=y##	Det:Mas+SG+Def
+DET##cpos=D|g=m|n=s|s=dem##	Det:Mas+SG+Dem
+DET##cpos=D|g=m|n=s|s=dem|pred=y##	Det:Mas+SG+Dem
+DET##cpos=D|g=m|n=s|s=ind##	Det:Mas+SG+Indef
+DET##cpos=D|g=m|n=s|s=ind|pred=y##	Det:Mas+SG+Indef
+DET##cpos=D|g=m|n=s|s=neg##	Det:Mas+SG+Neg
+DET##cpos=D|g=m|n=s|s=part##	Det:Mas+SG+Part
+DET##cpos=D|mwehead=DET+|n=p|s=ind|pred=y##	Det:PL+Indef
+DET##cpos=D|mwehead=DET+|s=card|pred=y##	Det:+Card
+DET##cpos=D|mwehead=NPP+|n=s|s=def|pred=y##	Det:SG+Def
+DET##cpos=D|mwehead=PRO+|n=p|s=ind|pred=y##	Det:PL+Indef
+DET##cpos=D|mwehead=PRO+|n=s|s=def|pred=y##	Det:SG+Def
+DET##cpos=D|mwehead=PRO+|n=s|s=ind|pred=y##	Det:SG+Indef
+DET##cpos=D|n=p|s=dem|pred=y##	Det:PL+Dem
+DET##cpos=D|n=p|s=ind|pred=y##	Det:PL+Indef
+DET##cpos=D|n=s|pred=y##	Det:SG
+DET##cpos=D|n=s|s=def##	Det:SG+Def
+DET##cpos=D|n=s|s=def|pred=y##	Det:SG+Def
+DET##cpos=D|s=card|pred=y##	Det:+Card
+DET##cpos=D|g=f|mwehead=ADV+|n=s|s=def|pred=y##	Det:Fem+SG+Def;peu importe
+DET##cpos=D|g=f|mwehead=ADV+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef;peu importe
+DET##cpos=D|g=f|mwehead=DET+|n=s|s=def|pred=y##	Det:Fem+SG+Def;peu importe
+DET##cpos=D|g=f|mwehead=DET+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef;peu importe
+DET##cpos=D|g=f|mwehead=NPP+|n=s|s=def|pred=y##	Det:Fem+SG+Def;peu importe
+DET##cpos=D|g=f|mwehead=NPP+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef;peu importe
+DET##cpos=D|g=f|mwehead=NPP+|n=s|s=poss|pred=y##	Det:Fem+SG+Pos;peu importe
+DET##cpos=D|g=f|n=p|p=1|s=poss##	Det:Fem+PL+P1+Pos;peu importe
+DET##cpos=D|g=f|n=p|p=2|s=poss##	Det:Fem+PL+P2+Pos;peu importe
+DET##cpos=D|g=f|n=p|p=3|s=poss##	Det:Fem+PL+P3+Pos;peu importe
+DET##cpos=D|g=f|n=p|s=card##	Det:Fem+PL+Card;peu importe
+DET##cpos=D|g=f|n=p|s=def##	Det:Fem+PL+Def;peu importe
+DET##cpos=D|g=f|n=p|s=dem##	Det:Fem+PL+Dem;peu importe
+DET##cpos=D|g=f|n=p|s=ind##	Det:Fem+PL+Indef;peu importe
+DET##cpos=D|g=f|n=s|p=3|s=poss##	Det:Fem+SG+P3+Pos;peu importe
+DET##cpos=D|g=f|n=s|s=card##	Det:Fem+SG+Card;peu importe
+DET##cpos=D|g=f|n=s|s=def##	Det:Fem+SG+Def;peu importe
+DET##cpos=D|g=f|n=s|s=def|pred=y##	Det:Fem+SG+Def;peu importe
+DET##cpos=D|g=f|n=s|s=dem##	Det:Fem+SG+Dem;peu importe
+DET##cpos=D|g=f|n=s|s=ind##	Det:Fem+SG+Indef;peu importe
+DET##cpos=D|g=f|n=s|s=ind|pred=y##	Det:Fem+SG+Indef;peu importe
+DET##cpos=D|g=f|n=s|s=neg##	Det:Fem+SG+Neg;peu importe
+DET##cpos=D|g=m|mwehead=ADV+|n=s|s=def|pred=y##	Det:Mas+SG+Def;peu importe
+DET##cpos=D|g=m|mwehead=ADV+|n=s|s=ind|pred=y##	Det:Mas+SG+Indef;peu importe
+DET##cpos=D|g=m|mwehead=DET+|n=s|s=ind|pred=y##	Det:Mas+SG+Indef;peu importe
+DET##cpos=D|g=m|mwehead=NC+|n=s|s=def|pred=y##	Det:Mas+SG+Def;peu importe
+DET##cpos=D|g=m|mwehead=NPP+|n=s|s=def|pred=y##	Det:Mas+SG+Def;peu importe
+DET##cpos=D|g=m|n=p|p=1|s=poss##	Det:Mas+PL+P1+Pos;peu importe
+DET##cpos=D|g=m|n=p|p=3|s=poss##	Det:Mas+PL+P3+Pos;peu importe
+DET##cpos=D|g=m|n=p|s=card##	Det:Mas+PL+Card;peu importe
+DET##cpos=D|g=m|n=p|s=def##	Det:Mas+PL+Def;peu importe
+DET##cpos=D|g=m|n=p|s=dem##	Det:Mas+PL+Dem;peu importe
+DET##cpos=D|g=m|n=p|s=ind##	Det:Mas+PL+Indef;peu importe
+DET##cpos=D|g=m|n=s|p=2|s=poss##	Det:Mas+SG+P2+Pos;peu importe
+DET##cpos=D|g=m|n=s|p=3|s=poss##	Det:Mas+SG+P3+Pos;peu importe
+DET##cpos=D|g=m|n=s|s=card##	Det:Mas+SG+Card;peu importe
+DET##cpos=D|g=m|n=s|s=def##	Det:Mas+SG+Def;peu importe
+DET##cpos=D|g=m|n=s|s=def|pred=y##	Det:Mas+SG+Def;peu importe
+DET##cpos=D|g=m|n=s|s=dem##	Det:Mas+SG+Dem;peu importe
+DET##cpos=D|g=m|n=s|s=dem|pred=y##	Det:Mas+SG+Dem;peu importe
+DET##cpos=D|g=m|n=s|s=ind##	Det:Mas+SG+Indef;peu importe
+DET##cpos=D|g=m|n=s|s=ind|pred=y##	Det:Mas+SG+Indef;peu importe
+DET##cpos=D|g=m|n=s|s=neg##	Det:Mas+SG+Neg;peu importe
+DET##cpos=D|g=m|n=s|s=part##	Det:Mas+SG+Part;peu importe
+DET##cpos=D|mwehead=DET+|n=p|s=ind|pred=y##	Det:PL+Indef;peu importe
+DET##cpos=D|mwehead=DET+|s=card|pred=y##	Det:+Card;peu importe
+DET##cpos=D|mwehead=NPP+|n=s|s=def|pred=y##	Det:SG+Def;peu importe
+DET##cpos=D|mwehead=PRO+|n=p|s=ind|pred=y##	Det:PL+Indef;peu importe
+DET##cpos=D|mwehead=PRO+|n=s|s=def|pred=y##	Det:SG+Def;peu importe
+DET##cpos=D|mwehead=PRO+|n=s|s=ind|pred=y##	Det:SG+Indef;peu importe
+DET##cpos=D|n=p|s=dem|pred=y##	Det:PL+Dem;peu importe
+DET##cpos=D|n=p|s=ind|pred=y##	Det:PL+Indef;peu importe
+DET##cpos=D|n=s|pred=y##	Det:SG;peu importe
+DET##cpos=D|n=s|s=def##	Det:SG+Def;peu importe
+DET##cpos=D|n=s|s=def|pred=y##	Det:SG+Def;peu importe
+DET##cpos=D|s=card|pred=y##	Det:+Card;peu importe
+DET##cpos=D|g=f|mwehead=ADV+|n=s|s=def|pred=y##	Det:Fem+SG+Def;peu importe
+DET##cpos=D|g=f|mwehead=ADV+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef;peu importe
+DET##cpos=D|g=f|mwehead=DET+|n=s|s=def|pred=y##	Det:Fem+SG+Def;peu importe
+DET##cpos=D|g=f|mwehead=DET+|n=s|s=ind|pred=y##	Det:Fem+SG+Indef;peu importe

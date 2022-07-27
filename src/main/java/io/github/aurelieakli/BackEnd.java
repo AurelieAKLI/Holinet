@@ -191,6 +191,13 @@ public class BackEnd {
         return request;
     }
 
+    public String requeteVerification(String etiquette){
+        String request = "MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'"+etiquette;
+        return request+"'}) return DISTINCT PROPERTIES(n)";
+
+    }
+
+
     /*
     String y="MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'Det:'})," +
                 "(n:n_term)-[rr:r_pos]->(l:n_pos{name:'Number:Sing'})," +
@@ -328,6 +335,7 @@ public class BackEnd {
 
         return (LinkedList<String>) res;
     }
+
 
 
 

@@ -4,6 +4,9 @@ package io.github.aurelieakli;
 
 //import static io.github.aurelieakli.GestionCSV.removeRecord;
 
+import org.apache.lucene.search.FieldCache;
+import scala.util.parsing.combinator.testing.Str;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,13 +72,76 @@ public class Main {
         listeDeuxiemeRequetteEtiquettesFusionnees.remove(54);
 
         //tableau contenant exactement la même chose que listePremiereRequetteEtiquettesFusionnees
-        String[] troisCol= listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
-        String[] quatreCol= listeDeuxiemeRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
+        //String[] troisCol= listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
+        //troisCol: on stocke les requette permettant de vérifier létat
+        //cinqCol : on stocke les 1ere requetes à afficher   //sixCol : on stocke les 2ere requetes à afficher
+        String[] quatreCol= new String[listePremiereRequetteEtiquettesFusionnees.size()];
+        String[] cinqCol= listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
+        String[] sixCol= listeDeuxiemeRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
+        String[] septCol = new String[listePremiereRequetteEtiquettesFusionnees.size()];
+        String[] huitCol = new String[listePremiereRequetteEtiquettesFusionnees.size()];
+        String[] neufCol = new String[listePremiereRequetteEtiquettesFusionnees.size()]; // la colonne 9 contiendra la différence
 
+        String[] troisCol= new String[listePremiereRequetteEtiquettesFusionnees.size()];
+
+        for(int i=0; i<troisCol.length; ++i){
+            //backEnd.executeSet(listNodesNames.get(i));
+            troisCol[i]= backEnd.requeteVerification(listNodesNames.get(i)); //3eme colonne : avant d'effectuer une requete on stocke la requete qui fait le point
+            List<String> liste = backEnd.executeSet(troisCol[i]);    ///3eme colonne : avant d'effectuer une requete on fait le point
+            quatreCol[i]=""; //quatreCol va stocker le résultat de l'état avant les requetes
+            for (int j=0; j<liste.size(); ++j){
+                quatreCol[i]+=liste.get(j)+ "  -  ";
+            }
+
+            backEnd.executeSet(cinqCol[i]);    //on execute les premieres requete
+            backEnd.executeSet(sixCol[i]);      //on execute les deuxiemes requetes
+
+            septCol[i]= backEnd.requeteVerification(listNodesNames.get(i));    // on remplit le 7eme tableau avec la verification des resultats des requetes précédentes
+            List<String> liste_bis = backEnd.executeSet(troisCol[i]);
+            huitCol[i]=""; //huitCol va stocker le résultat de l'état apres les requetes
+            for (int j=0; j<liste.size(); ++j){
+                huitCol[i]+=liste_bis.get(j)+ "  -  ";
+                neufCol[i]="";
+                if (!liste.contains(liste_bis.get(j))){
+                    neufCol[i]+=liste_bis.get(j)+ "  -  ";
+                }
+            }
+
+
+
+
+
+        }
+
+        //TODO : normalement tout est fait; vérifier si tout juste avant d'executer;
+        //TODO : écrire un programme permettant de différencier les résultats des colonnes 4 et 8
+        //TODO : ecrire une fonction qui permet d'ecrire un entete en prenant en entrée un varag qui contiendra toutes les case souhaitées
+
+        /*
+        for (int i=0; i<listePremiereRequetteEtiquettesFusionnees.size(); ++i){
+            cinqCol[i]="";
+            List<String> result = new LinkedList<>();
+            cinqCol[i] = backEnd.requeteVerification(listNodesNames.get(i));
+            System.out.println(cinqCol[i]);
+            //List<String> result = backEnd.executeSet("MATCH (n) WHERE n.name=\"chat\" OR  n.name=\"chats\" RETURN DISTINCT PROPERTIES(n)");
+
+            for (int j=0; j<result.size(); ++j){
+                cinqCol[i]+=result.get(j)+"  -  ";
+            }
+
+            //System.out.println(result);
+        } */
         //csv.addColumn(csvOut, ";", 1, listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]));
         //csv.addColumn(csvOut, ";", 2, listeDeuxiemeRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]));
+
+
         csv.addColumn(csvOut, ";", 1, troisCol);
         csv.addColumn(csvOut, ";", 2, quatreCol);
+        csv.addColumn(csvOut, ";", 3, cinqCol);
+        csv.addColumn(csvOut, ";", 4, sixCol);
+        csv.addColumn(csvOut, ";", 5, septCol);
+        csv.addColumn(csvOut, ";", 6, huitCol);
+        csv.addColumn(csvOut, ";", 7, neufCol);
 
         backEnd.close();
 

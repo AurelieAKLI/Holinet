@@ -8,6 +8,7 @@ import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.PropertyContainer;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BackEnd {
@@ -40,6 +41,58 @@ public class BackEnd {
         return request;
     }
 
+    public String[] getStringPremierePartieWithLastRelationship(String request, String[] r, String m, String[] arguments){
+        for(int i = 0; i< arguments.length; ++i){
+            if (i==0){
+                r[i]="r";
+            }
+            else{
+                r[i]= r[i-1]+"r";
+            }
+            m +="m";
+            //System.out.println(r[i]+"\n");
+            if (arguments[i].equals("PL")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Plur:'}) ";
+            }
+            else if (arguments[i].equals("SG")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Sing:'}) ";
+            }
+            else{
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'"+ arguments[i]+":'}) ";
+
+            }
+
+        }
+
+        return r;
+    }
+
+    public String fusionEtiquettesDeuxiemeRequete(String... arguments){
+        String request="MATCH";
+        String[] r= new String[arguments.length];
+
+        for (int i=0; i<r.length;++i){
+            r[i]="";
+        }
+
+        String m="";
+        request = getStringPremierePartie(request, r, m, arguments);
+        r = getStringPremierePartieWithLastRelationship(request, r, m, arguments);
+        request+=" SET (CASE WHEN NOT exists("+r[r.length-1]+".weight) THEN "+r[r.length-1]+" END).weight= (";
+        for (int i=0; i<r.length; ++i){
+            if (i!=r.length-1){
+                request+=r[i]+".weight+ ";
+            }
+            else {
+                request+=r[i]+".weight)/3 ";
+
+            }
+        }
+        request=request.replaceFirst(",","");
+
+        return request+"  RETURN DISTINCT PROPERTIES(n)";
+    }
+
     public String fusionEtiquettes(String... arguments){
         //trait : nombre genre sous categ : def/indef
         //structure de trait : après le 1er arg du vararg
@@ -61,7 +114,9 @@ public class BackEnd {
         int x = (arguments.length)-1 ;
         request = finalite(request, x, arguments);
         request=request.replace("E AND", "");
-        return request.replace("+}", "'");
+        String reponse = request.replace("+}", "'");
+        //return request.replace("+}", "'");
+        return reponse;
 
         //System.out.println(request);
         //executeSet(request);
@@ -118,8 +173,8 @@ public class BackEnd {
     }
 
     private String finalite(String request, int x, String... arguments) {
-        System.out.println(request);
-        request +=" MERGE (n)-["+ arguments[x]+"r:r_pos]->(nouveau:n_pos{'";
+        //System.out.println(request);
+        request +=" MERGE (n)-["+ arguments[x]+"r:r_pos]->(nouveau:n_pos{name:'";
         //System.out.println(request);
         request = getStringDeuxiemePartie(request, arguments);
 
@@ -156,14 +211,14 @@ public class BackEnd {
             }
             m +="m";
             //System.out.println(r[i]+"\n");
-            if (arguments[i]=="PL"){
-                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{'Plur:'}) ";
+            if (arguments[i].equals("PL")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Plur:'}) ";
             }
-            else if (arguments[i]=="SG"){
-                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{'Sing:'}) ";
+            else if (arguments[i].equals("SG")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Sing:'}) ";
             }
             else{
-                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{'"+ arguments[i]+":'}) ";
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'"+ arguments[i]+":'}) ";
 
             }
 
@@ -173,7 +228,7 @@ public class BackEnd {
 
     private String getStringDeuxiemePartie(String request, String[] arguments) {
         for (int i = 0; i< arguments.length; ++i){
-            System.out.println((arguments[i]));
+            //System.out.println((arguments[i]));
             if (i==0){
                 String etiquette= arguments[i].split(":")[0];
                 request +=etiquette+":";
@@ -230,8 +285,8 @@ public class BackEnd {
         }
     }*/
 
-    public List<String> executeSet(String cypher) {
-        List<String> res = new ArrayList<>();
+    public LinkedList<String> executeSet(String cypher) {
+        List<String> res = new LinkedList<>();
         try ( Session session = driver.session() ){
             session.writeTransaction(tx -> {
                 Result result = tx.run(cypher);
@@ -271,7 +326,7 @@ public class BackEnd {
             System.out.println(e.getMessage());
         }
 
-        return res;
+        return (LinkedList<String>) res;
     }
 
 

@@ -4,10 +4,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class GestionCSV {
 
@@ -33,7 +30,7 @@ public class GestionCSV {
 
     }
 
-    public  void  removeRecord(String filepath, String tempFile,  String removeTerm, int pos, String delimiter) {
+    public  void  removeRecord(String filepath, String tempFile,  String keepTerm, int pos, String delimiter) {
         int position = pos-1;
         //String tempFile="temp.txt"; //ecrit dans temp.txt les lignes qui contiennent Alice
         File oldFile = new File(filepath);
@@ -53,13 +50,13 @@ public class GestionCSV {
             while ((currentLine=br.readLine()) != null){
                 data=currentLine.split("##");
                 //System.out.println(data[position]);
-                if ((data[position].equalsIgnoreCase(removeTerm))){
+                if ((data[position].equalsIgnoreCase(keepTerm))){
                     pw.println(currentLine);
 
                 }
             }
             pw.close();
-            System.out.println("youpi");
+            //System.out.println("youpi");
         }
         catch (Exception e){
 
@@ -69,12 +66,12 @@ public class GestionCSV {
     public void addColumn(String filepath, String delimiter, int colPos, String... newDataCol) {
         try{
             List<String> data = Files.readAllLines(Paths.get(filepath));
-            //PrintWriter pw = new PrintWriter(filepath);
+            PrintWriter pw = new PrintWriter(filepath);
             FileWriter fw = new FileWriter(filepath, true);
-            PrintWriter pw = new PrintWriter(fw);
+            pw = new PrintWriter(fw);
             for (int i = 0;  i< newDataCol.length; ++i){
                 String[] line = data.get(i).split(delimiter);
-                List<String> record = new ArrayList<>(Arrays.asList(line));
+                List<String> record = new LinkedList<>(Arrays.asList(line));
                 record.add(colPos, newDataCol[i]);
                 pw.println(String.join(delimiter, record));
             }
@@ -142,22 +139,19 @@ public class GestionCSV {
             x = new Scanner(new File(filepath));
             x.useDelimiter("[##\n]");
             while(x.hasNext()){
-                pos=x.next();
-                if (pos.contains("Det:") && !pos.contains("Pre")){
+                pos = x.next();
+                if (pos.contains("Det:") && !pos.contains("Pre") && !pos.contains("Intg")){
                     pos=pos.replace("\t","");
                     pos=pos.replace("DET+","");
-
                     //System.out.println(pos);
                     listNodesNames.add(pos);
                 }
             }
-
         }
         catch (Exception e){
 
         }
         return listNodesNames;
-
     }
 
 

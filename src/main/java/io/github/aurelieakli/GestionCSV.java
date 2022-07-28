@@ -20,6 +20,7 @@ public class GestionCSV {
         String searchTerm=name;
 
         String[] newDataCol =  {"newData1", "newData2", "newData3"};
+        //enteteCSV("reszultat.csv"  , "saluuuut",";", newDataCol);
         //AddColumn(newDataCol,"cake.csv",";",3);
 
         //saveRecord(name, name2, pk, sk , filepath);
@@ -27,6 +28,37 @@ public class GestionCSV {
 
 
         //removeRecord(filepath, "Alice", 1, ";"); mettre static
+
+    }
+
+    public void  enteteCSV(String filepath, String titreProposéparlUtilisateur, String... entete){
+        File file =  new File(filepath);
+        try{
+            FileWriter fw = new FileWriter(filepath, false);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            pw.println(titreProposéparlUtilisateur+"\t ;");
+            pw.print("étiquettes FTB\t\t;\t");//1
+            pw.print("étiquettes JDM\t\t;\t");//2
+            pw.print("requêtes verification avant traitement\t\t;\t");//3
+            pw.print("résultat verification avant traitement\t\t;\t");//4
+            pw.print("première requete du traitement : on vérifie si les relations souhaitées existent sinon on les crée\t\t;\t");//5
+            pw.print("deuxième requete du traitement : on vérifie si les relations souhaitées ont un poids sinon on les pondère\t\t;\t");//6
+            pw.print("requête pour avoir le résultat du traitement précédent\t\t;\t");//7
+            pw.print("résultat du traitement précédent\t\t;\t");//8
+            pw.print("mots nouveaux ajoutés grâce à ce traitement\t\t;\t");//9
+            pw.print("nombre d'éléments dans la 8eme colonne\t\t;\t");//10
+            pw.print("nombre d'éléments dans la 9eme colonne\t\t;\t");//11
+
+            for (int i=0; i< entete.length; ++i){
+                pw.print(entete[i]+"\t\t;\t");
+            }
+            pw.flush();
+            pw.close();
+        }
+        catch(Exception e){
+
+        }
 
     }
 
@@ -98,12 +130,9 @@ public class GestionCSV {
 
             JOptionPane.showMessageDialog(null, "Record saved");
 
-
-
         }
         catch (Exception e){
             JOptionPane.showMessageDialog(null, "Record not saved");
-
         }
     }
 

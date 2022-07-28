@@ -20,8 +20,11 @@ public class Main {
         String csvIn = "ptb2jdm.lookup.csv";
         String csvOut = "resultat.csv";
 
+
         BackEnd backEnd = new BackEnd("stageEval", "bolt://localhost:7687", "neo4j", "0000");
         backEnd.createSession();
+
+        //csv.enteteCSV(csvOut, "Projet Holinet");
 
         //on ne retient quer les lignes du ptb2jdm.lookup.csv qui qui nous intéressent
         csv.removeRecord(csvIn, csvOut, "DET", 1, ";");
@@ -71,50 +74,72 @@ public class Main {
         listePremiereRequetteEtiquettesFusionnees.remove(54);
         listeDeuxiemeRequetteEtiquettesFusionnees.remove(54);
 
+        int x= listePremiereRequetteEtiquettesFusionnees.size();
+
         //tableau contenant exactement la même chose que listePremiereRequetteEtiquettesFusionnees
         //String[] troisCol= listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
         //troisCol: on stocke les requette permettant de vérifier létat
         //cinqCol : on stocke les 1ere requetes à afficher   //sixCol : on stocke les 2ere requetes à afficher
-        String[] quatreCol= new String[listePremiereRequetteEtiquettesFusionnees.size()];
-        String[] cinqCol= listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
-        String[] sixCol= listeDeuxiemeRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]);
-        String[] septCol = new String[listePremiereRequetteEtiquettesFusionnees.size()];
-        String[] huitCol = new String[listePremiereRequetteEtiquettesFusionnees.size()];
-        String[] neufCol = new String[listePremiereRequetteEtiquettesFusionnees.size()]; // la colonne 9 contiendra la différence
-
-        String[] troisCol= new String[listePremiereRequetteEtiquettesFusionnees.size()];
+        String[] quatreCol= new String[x];
+        String[] cinqCol= listePremiereRequetteEtiquettesFusionnees.toArray(new String[x]);
+        String[] sixCol= listeDeuxiemeRequetteEtiquettesFusionnees.toArray(new String[x]);
+        String[] septCol = new String[x];
+        String[] huitCol = new String[x];
+        String[] neufCol = new String[x]; // la colonne 9 contiendra la différence
+        String[] dixCol = new String[x]; // nombre d'éléments dans la 8eme colonne
+        String[] onzeCol = new String[x]; // nombre d'éléments dans la 9eme colonne
+        String[] troisCol= new String[x];
 
         for(int i=0; i<troisCol.length; ++i){
             //backEnd.executeSet(listNodesNames.get(i));
             troisCol[i]= backEnd.requeteVerification(listNodesNames.get(i)); //3eme colonne : avant d'effectuer une requete on stocke la requete qui fait le point
+            //septCol[i]= backEnd.requeteVerification(listNodesNames.get(i));    // on remplit le 7eme tableau avec la verification des resultats des requetes précédentes
+            septCol[i]=troisCol[i];
+
             List<String> liste = backEnd.executeSet(troisCol[i]);    ///3eme colonne : avant d'effectuer une requete on fait le point
             quatreCol[i]=""; //quatreCol va stocker le résultat de l'état avant les requetes
-            for (int j=0; j<liste.size(); ++j){
-                quatreCol[i]+=liste.get(j)+ "  -  ";
+            if (liste.size() != 0){
+                for (int j=0; j<liste.size(); ++j){
+                    quatreCol[i]+=liste.get(j)+ "  -  ";
+
+                }
             }
+            else {
+                quatreCol[i]+= "     ";
+            }
+
+            dixCol[i]=Integer.toString(liste.size());
 
             backEnd.executeSet(cinqCol[i]);    //on execute les premieres requete
             backEnd.executeSet(sixCol[i]);      //on execute les deuxiemes requetes
 
-            septCol[i]= backEnd.requeteVerification(listNodesNames.get(i));    // on remplit le 7eme tableau avec la verification des resultats des requetes précédentes
             List<String> liste_bis = backEnd.executeSet(troisCol[i]);
-            huitCol[i]=""; //huitCol va stocker le résultat de l'état apres les requetes
-            for (int j=0; j<liste.size(); ++j){
+            onzeCol[i]=Integer.toString(liste.size());
+            huitCol[i]=" "; //huitCol va stocker le résultat de l'état apres les requetes
+            for (int j=0; j<liste_bis.size(); ++j){
                 huitCol[i]+=liste_bis.get(j)+ "  -  ";
-                neufCol[i]="";
+                neufCol[i]=" ";
                 if (!liste.contains(liste_bis.get(j))){
                     neufCol[i]+=liste_bis.get(j)+ "  -  ";
                 }
             }
-
-
-
-
-
         }
 
+        csv.addColumn(csvOut, ";", 1, troisCol);
+        csv.addColumn(csvOut, ";", 2, quatreCol);
+        csv.addColumn(csvOut, ";", 3, cinqCol);
+        csv.addColumn(csvOut, ";", 4, sixCol);
+        csv.addColumn(csvOut, ";", 5, septCol);
+
+        csv.addColumn(csvOut, ";", 6, huitCol);
+        csv.addColumn(csvOut, ";", 7, neufCol);
+        csv.addColumn(csvOut, ";", 8, dixCol);
+        csv.addColumn(csvOut, ";", 9, onzeCol);
+
+        backEnd.close();
+
         //TODO : normalement tout est fait; vérifier si tout juste avant d'executer;
-        //TODO : écrire un programme permettant de différencier les résultats des colonnes 4 et 8
+        //TODO : écrire un programme permettant de différencier les résultats des colonnes 4 et 8 : c'est fait
         //TODO : ecrire une fonction qui permet d'ecrire un entete en prenant en entrée un varag qui contiendra toutes les case souhaitées
 
         /*
@@ -134,16 +159,6 @@ public class Main {
         //csv.addColumn(csvOut, ";", 1, listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]));
         //csv.addColumn(csvOut, ";", 2, listeDeuxiemeRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]));
 
-
-        csv.addColumn(csvOut, ";", 1, troisCol);
-        csv.addColumn(csvOut, ";", 2, quatreCol);
-        csv.addColumn(csvOut, ";", 3, cinqCol);
-        csv.addColumn(csvOut, ";", 4, sixCol);
-        csv.addColumn(csvOut, ";", 5, septCol);
-        csv.addColumn(csvOut, ";", 6, huitCol);
-        csv.addColumn(csvOut, ";", 7, neufCol);
-
-        backEnd.close();
 
 
         //System.out.println("listePremiereRequetteEtiquettesFusionnees : "+listePremiereRequetteEtiquettesFusionnees);

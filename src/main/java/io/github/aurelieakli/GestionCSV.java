@@ -10,28 +10,7 @@ public class GestionCSV {
 
     private static Scanner x;
 
-
-    public static void main(String[] args){
-        String name = "Bob";
-        String name2 = "Alice";
-        String pk = "00";
-        String sk = "11";
-        String filepath = "cake.csv";
-        String searchTerm=name;
-
-        String[] newDataCol =  {"newData1", "newData2", "newData3"};
-        //enteteCSV("reszultat.csv"  , "saluuuut",";", newDataCol);
-        //AddColumn(newDataCol,"cake.csv",";",3);
-
-        //saveRecord(name, name2, pk, sk , filepath);
-        //readRecord(name2,"cake.csv");
-
-
-        //removeRecord(filepath, "Alice", 1, ";"); mettre static
-
-    }
-
-    public void  enteteCSV(String filepath, String titreProposéparlUtilisateur, String... entete){
+    public void  enteteCSV(String filepath, String titreProposéparlUtilisateur, String... colonneSup){
         File file =  new File(filepath);
         try{
             FileWriter fw = new FileWriter(filepath, false);
@@ -50,64 +29,51 @@ public class GestionCSV {
             pw.print("nombre d'éléments dans la 8eme colonne\t\t;\t");//10
             pw.print("nombre d'éléments dans la 9eme colonne\t\t;\t");//11
 
-            for (int i=0; i< entete.length; ++i){
-                pw.print(entete[i]+"\t\t;\t");
+            for (int i=0; i< colonneSup.length; ++i){
+                pw.print(colonneSup[i]+"\t\t;\t");
             }
             pw.flush();
             pw.close();
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
-
     }
 
     public  void  removeRecord(String filepath, String tempFile,  String keepTerm, int pos, String delimiter) {
         int position = pos-1;
-        //String tempFile="temp.txt"; //ecrit dans temp.txt les lignes qui contiennent Alice
         File oldFile = new File(filepath);
         File newFile = new File(tempFile);
-
-        String currentLine;
-        String data[];
-
         try{
             FileWriter fw = new FileWriter(tempFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
-
             FileReader fr = new FileReader(filepath);
             BufferedReader br = new BufferedReader(fr);
 
-            while ((currentLine=br.readLine()) != null){
-                data=currentLine.split("##");
-                //System.out.println(data[position]);
-                if ((data[position].equalsIgnoreCase(keepTerm))){
-                    pw.println(currentLine);
-
-                }
-            }
+            writingInRemoveRecord(keepTerm, position, pw, br);
             pw.close();
-            //System.out.println("youpi");
         }
         catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
+    private void writingInRemoveRecord(String keepTerm, int position, PrintWriter pw, BufferedReader br) throws IOException {
+        String currentLine;
+        String[] data;
+        while ((currentLine= br.readLine()) != null){
+            data=currentLine.split("##");
+            if ((data[position].equalsIgnoreCase(keepTerm))){
+                pw.println(currentLine);
+            }
         }
     }
 
 
     public void addColumn(String filepath, String delimiter, int colPos, String... newDataCol) {
         try{
-            List<String> data = Files.readAllLines(Paths.get(filepath));
-            PrintWriter pw = new PrintWriter(filepath);
-            FileWriter fw = new FileWriter(filepath, true);
-            pw = new PrintWriter(fw);
-            for (int i = 0;  i< newDataCol.length; ++i){
-                String[] line = data.get(i).split(delimiter);
-                List<String> record = new LinkedList<>(Arrays.asList(line));
-                record.add(colPos, newDataCol[i]);
-                pw.println(String.join(delimiter, record));
-            }
+            PrintWriter pw = getPrintWriterForAddColumn(filepath, delimiter, colPos, newDataCol);
             pw.close();
             System.out.println("Column added.");
         }
@@ -115,6 +81,26 @@ public class GestionCSV {
             System.out.println("Column NOT added.");
             e.printStackTrace();
 
+        }
+    }
+
+    private PrintWriter getPrintWriterForAddColumn(String filepath, String delimiter, int colPos, String[] newDataCol) throws IOException {
+        List<String> data = Files.readAllLines(Paths.get(filepath));
+        PrintWriter pw = new PrintWriter(filepath);
+        FileWriter fw = new FileWriter(filepath, true);
+        pw = new PrintWriter(fw);
+
+        writingInAddColumn(delimiter, colPos, newDataCol, data, pw);
+
+        return pw;
+    }
+
+    private void writingInAddColumn(String delimiter, int colPos, String[] newDataCol, List<String> data, PrintWriter pw) {
+        for (int i = 0; i< newDataCol.length; ++i){
+            String[] line = data.get(i).split(delimiter);
+            List<String> record = new LinkedList<>(Arrays.asList(line));
+            record.add(colPos, newDataCol[i]);
+            pw.println(String.join(delimiter, record));
         }
     }
 
@@ -127,9 +113,7 @@ public class GestionCSV {
             pw.println(name+";"+pk+";"+name2+";"+sk);
             pw.flush();
             pw.close();
-
             JOptionPane.showMessageDialog(null, "Record saved");
-
         }
         catch (Exception e){
             JOptionPane.showMessageDialog(null, "Record not saved");
@@ -144,21 +128,25 @@ public class GestionCSV {
         String sk = "";
 
         try{
-            x = new Scanner(new File(filepath));
-            x.useDelimiter("[;\n]");
-            while(x.hasNext() && !found){
-                name=x.next();
-                System.out.println(name);
-
-                if (name.equals(searchTerm)){
-                    found=true;
-                    System.out.println("youpii");
-                }
-            }
+            readingInReadRecord(searchTerm, filepath, found);
 
         }
         catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
+    private void readingInReadRecord(String searchTerm, String filepath, boolean found) throws FileNotFoundException {
+        String name;
+        x = new Scanner(new File(filepath));
+        x.useDelimiter("[;\n]");
+        while(x.hasNext() && !found){
+            name=x.next();
+            System.out.println(name);
+
+            if (name.equals(searchTerm)){
+                found =true;
+            }
         }
     }
 
@@ -166,22 +154,31 @@ public class GestionCSV {
         String pos="";
         List<String> listNodesNames = new ArrayList<>();
         try{
-            x = new Scanner(new File(filepath));
-            x.useDelimiter("[##\n]");
-            while(x.hasNext()){
-                pos = x.next();
-                if (pos.contains("Det:") && !pos.contains("Pre") && !pos.contains("Intg")){
-                    pos=pos.replace("\t","");
-                    pos=pos.replace("DET+","");
-                    //System.out.println(pos);
-                    listNodesNames.add(pos);
-                }
-            }
+            writingInGetNamePosInCSV(filepath, listNodesNames);
         }
         catch (Exception e){
-
+            e.printStackTrace();
         }
         return listNodesNames;
+    }
+
+    private void writingInGetNamePosInCSV(String filepath, List<String> listNodesNames) throws FileNotFoundException {
+        String pos;
+        x = new Scanner(new File(filepath));
+        x.useDelimiter("[##\n]");
+        while(x.hasNext()){
+            pos = x.next();
+            if (pos.contains("Det:") && !pos.contains("Pre") && !pos.contains("Intg")){  //A MODIFIER SELON LE POS QUE L'ON CHERCHE
+                pos=pos.replace("\t","");
+                pos=pos.replace("DET+","");
+                listNodesNames.add(pos);
+            }
+        }
+    }
+
+    public Boolean verification(String TupleEtiquetteFtbDet, String fichierCSV){ //à itérer sur la liste de tuple donner par lecture dans lecturePTB.java
+
+        return true;
     }
 
 

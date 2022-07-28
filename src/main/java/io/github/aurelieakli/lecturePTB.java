@@ -147,6 +147,8 @@ public class lecturePTB {
         return null;
     }
 
+    //TODO / faire une liste de booleen correspondant à la liste des det trouvés dans le ftb pour voir si ils sont ou pas dans le resultat.csv
+
     public static void main(String[] args) throws Exception {
         lecturePTB lecture= new lecturePTB();
         File dossier = new File("\\\\Filer\\home\\Invites\\akli\\Mes documents\\fichiersPTBaLire");
@@ -156,10 +158,7 @@ public class lecturePTB {
         //Une valeur peut avoir plusieurs clés ->  les catg gram des valeurs assoc à différents mots
         //une valer=catg et le mot en valeur
         //System.out.println(ligne);
-        HashMap<String,Integer> h = new HashMap<String,Integer> ();
-        h.put(null,null);
-        h.put("det -  la",1);
-        h.put("det -  la",2);
+
 
         //System.out.println(h+"\t"+h.size());
         //System.out.println(h.get("det -  la")+10);

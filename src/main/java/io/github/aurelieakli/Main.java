@@ -97,7 +97,7 @@ public class Main {
             septCol[i]=troisCol[i];
 
             List<String> liste = backEnd.executeSet(troisCol[i]);    ///3eme colonne : avant d'effectuer une requete on fait le point
-            quatreCol[i]=""; //quatreCol va stocker le résultat de l'état avant les requetes
+            quatreCol[i]="-  "; //quatreCol va stocker le résultat de l'état avant les requetes
             if (liste.size() != 0){
                 for (int j=0; j<liste.size(); ++j){
                     quatreCol[i]+=liste.get(j)+ "  -  ";
@@ -115,7 +115,7 @@ public class Main {
 
             List<String> liste_bis = backEnd.executeSet(troisCol[i]);
             onzeCol[i]=Integer.toString(liste.size());
-            huitCol[i]=" "; //huitCol va stocker le résultat de l'état apres les requetes
+            huitCol[i]="-  "; //huitCol va stocker le résultat de l'état apres les requetes
             for (int j=0; j<liste_bis.size(); ++j){
                 huitCol[i]+=liste_bis.get(j)+ "  -  ";
                 neufCol[i]=" ";
@@ -130,7 +130,6 @@ public class Main {
         csv.addColumn(csvOut, ";", 3, cinqCol);
         csv.addColumn(csvOut, ";", 4, sixCol);
         csv.addColumn(csvOut, ";", 5, septCol);
-
         csv.addColumn(csvOut, ";", 6, huitCol);
         csv.addColumn(csvOut, ";", 7, neufCol);
         csv.addColumn(csvOut, ";", 8, dixCol);
@@ -142,52 +141,6 @@ public class Main {
         //TODO : écrire un programme permettant de différencier les résultats des colonnes 4 et 8 : c'est fait
         //TODO : ecrire une fonction qui permet d'ecrire un entete en prenant en entrée un varag qui contiendra toutes les case souhaitées
 
-        /*
-        for (int i=0; i<listePremiereRequetteEtiquettesFusionnees.size(); ++i){
-            cinqCol[i]="";
-            List<String> result = new LinkedList<>();
-            cinqCol[i] = backEnd.requeteVerification(listNodesNames.get(i));
-            System.out.println(cinqCol[i]);
-            //List<String> result = backEnd.executeSet("MATCH (n) WHERE n.name=\"chat\" OR  n.name=\"chats\" RETURN DISTINCT PROPERTIES(n)");
-
-            for (int j=0; j<result.size(); ++j){
-                cinqCol[i]+=result.get(j)+"  -  ";
-            }
-
-            //System.out.println(result);
-        } */
-        //csv.addColumn(csvOut, ";", 1, listePremiereRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]));
-        //csv.addColumn(csvOut, ";", 2, listeDeuxiemeRequetteEtiquettesFusionnees.toArray(new String[listePremiereRequetteEtiquettesFusionnees.size()]));
-
-
-
-        //System.out.println("listePremiereRequetteEtiquettesFusionnees : "+listePremiereRequetteEtiquettesFusionnees);
-        //---------------System.out.println(listePremiereRequetteEtiquettesFusionnees.size()+"\t iciiiii");
-        //System.out.println(listePremiereRequetteEtiquettesFusionnees);
-
-
-
-        //String[] tableau={"Det", "Fem", "Inv", "Plur"};
-        //        System.out.println(backEnd.retouverLiensAvec(tableau));
-        /*
-        String[] tableau = {"Det", "Fem", "PL", "Def"};
-        String request = backEnd.fusionEtiquettes(tableau);
-        System.out.println(request);
-
-        String[] tab = {"Det","Mas","PL","Def"} ;
-        System.out.println("crash test "+backEnd.fusionEtiquettesDeuxiemeRequete(tab));
-        for (int i=0; i<56; ++i){
-            System.out.println(troisCol[i]+" fin");
-
-        }
-        */
-
-
-
-        //System.out.println("Res final:"+backEnd.executeSet("MATCH (n) WHERE n.name=\"chat\" OR  n.name=\"chats\" RETURN DISTINCT PROPERTIES(n)"));
-
-
-        //Det:Fem+SG+Def
 
 
     }

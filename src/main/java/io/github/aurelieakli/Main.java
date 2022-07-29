@@ -60,7 +60,8 @@ public class Main {
 
             //on ajoute à listePremiereRequetteEtiquettesFusionnees la requête correpondant à l'étiquette dont on s'occupe
             //ceci à l'aide de la fonction fusionEtiquettes qui prend en entrée un vararg
-            String premiereRequete = backEnd.fusionEtiquettes(liste.toArray(new String[liste.size()]));
+            String premiereRequete = backEnd.nouvelleRequette(listNodesNames.get(i), liste.toArray(new String[liste.size()]) );
+            //String premiereRequete = backEnd.fusionEtiquettes(liste.toArray(new String[liste.size()]));
             String deuxiemeRequete = backEnd.fusionEtiquettesDeuxiemeRequete(liste.toArray(new String[liste.size()]));
             listePremiereRequetteEtiquettesFusionnees.add(premiereRequete);
             listeDeuxiemeRequetteEtiquettesFusionnees.add(deuxiemeRequete);

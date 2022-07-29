@@ -10,6 +10,22 @@ public class GestionCSV {
 
     private static Scanner x;
 
+    public static void main(String[] args){
+        String s = "lem=40|cpos=D|mwehead=DET+|pred=y|s=card -  40, " ;
+        verification(s,"");
+        return ;
+    }
+
+    public static Boolean verification(String TupleEtiquetteFtbDet, String fichierCSV){ //à itérer sur la liste de tuple donner par lecture dans lecturePTB.java
+        String[] s = TupleEtiquetteFtbDet.split("-", 2);
+        String t = s[1];
+        String etiquette = t.split("-",1)[0];
+        String det = t.split("-",1)[0];
+        det=det.replace("  ","-  ");
+        System.out.println(s[0]+"    " + det);
+        return true;
+    }
+
     public void  enteteCSV(String filepath, String titreProposéparlUtilisateur, String... colonneSup){
         File file =  new File(filepath);
         try{
@@ -175,11 +191,5 @@ public class GestionCSV {
             }
         }
     }
-
-    public Boolean verification(String TupleEtiquetteFtbDet, String fichierCSV){ //à itérer sur la liste de tuple donner par lecture dans lecturePTB.java
-
-        return true;
-    }
-
 
 }

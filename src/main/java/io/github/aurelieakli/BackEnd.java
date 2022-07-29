@@ -21,6 +21,11 @@ public class BackEnd {
         driver = GraphDatabase.driver( url, AuthTokens.basic( user, password ) );
         this.database = database;
     }
+    public static void main(String[] args){
+        String[] tab={"Det", "Fem", "SG", "Def"};
+        //System.out.println(nouvelleRequette("Det:Fem+SG+Def", tab));
+    }
+
 
     public String retourAvantfusion(String... arguments){
         String request = "match (m:n_pos) where m.name=\"";
@@ -57,13 +62,17 @@ public class BackEnd {
             else if (arguments[i].equals("SG")){
                 request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Sing:'}) ";
             }
+            else if (arguments[i].equals("Def")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Defini:'}) ";
+            }
+            else if (arguments[i].equals("Indef")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Indefini:'}) ";
+            }
             else{
                 request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'"+ arguments[i]+":'}) ";
 
             }
-
         }
-
         return r;
     }
 
@@ -110,7 +119,6 @@ public class BackEnd {
         for(int i=0; i<arguments.length; ++i){
             request+="AND "+ r[i]+".weight>0 ";
         }
-
         int x = (arguments.length)-1 ;
         request = finalite(request, x, arguments);
         request=request.replace("E AND", "");
@@ -162,6 +170,13 @@ public class BackEnd {
             else if (arguments[i].equals("Plur")){
                 request += "+PL";
             }
+            else if (arguments[i].equals("Indefini")){
+                request += "+Indef";
+            }
+            else if (arguments[i].equals("Defini")){
+                request += "+Def";
+            }
+
             else {
                 request+="+"+arguments[i];
             }
@@ -174,7 +189,8 @@ public class BackEnd {
 
     private String finalite(String request, int x, String... arguments) {
         //System.out.println(request);
-        request +=" MERGE (n)-["+ arguments[x]+"r:r_pos]->(nouveau:n_pos{name:'";
+        //request +=" MERGE (n)-["+ arguments[x]+"r:r_pos]->(nouveau:n_pos{name:'"; ERREUR GRAVE WSH
+        request +=" MERGE (n)-[:r_pos]->(nouveau:n_pos{name:'";
         //System.out.println(request);
         request = getStringDeuxiemePartie(request, arguments);
 
@@ -195,6 +211,33 @@ public class BackEnd {
         String request = "MATCH (n:n_term)-[r:r_pos]->(m:n_pos{name:'"+etiquette;
         return request+"'}) return DISTINCT PROPERTIES(n)";
 
+    }
+
+    public  String nouvelleRequette(String etiquetteJDMdepart, String... arguments){
+        String s = "MATCH (n:n_term)-[r:r_pos]->(m:n_pos), (n:n_term)-[rr:r_pos]->(mm:n_pos{name:'";
+        if (arguments[arguments.length-1].equals("Indef")){
+            s+="Indefini:";
+        }
+        else if(arguments[arguments.length-1].equals("Def")){
+            s+="Defini:";
+        }
+        else{
+            s+=arguments[arguments.length-1];
+        }
+        s+="'}) WHERE r.weight>0  AND rr.weight>0 AND m.name STARTS WITH ";
+        s+="'"+arguments[0]+":";
+        for (int i=1; i<arguments.length-1; ++i){
+            if (i==arguments.length-2){
+                s+=arguments[i];
+            }
+            else{
+                s+=arguments[i]+"+";
+            }
+        }
+
+        s+="' MERGE (n)-[:r_pos]->(nouveau:n_pos{name:'"+etiquetteJDMdepart+"'}) RETURN DISTINCT PROPERTIES(n)";
+
+        return s;
     }
 
 
@@ -223,6 +266,12 @@ public class BackEnd {
             }
             else if (arguments[i].equals("SG")){
                 request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Sing:'}) ";
+            }
+            else if (arguments[i].equals("Def")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Defini:'}) ";
+            }
+            else if (arguments[i].equals("Indef")){
+                request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'Indefini:'}) ";
             }
             else{
                 request +=", (n:n_term)-["+ r[i]+":r_pos]->("+ m +":n_pos{name:'"+ arguments[i]+":'}) ";
